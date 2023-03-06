@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { rules } from 'src/utils/rules';
 
 interface FormData {
 	email: string;
@@ -30,40 +31,33 @@ const Register = () => {
 									type='email'
 									className=' w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
 									placeholder='Email/Số điện thoại/Tên đăng nhập'
-									{...register('email', {
-										required: {
-											value: true,
-											message: 'Email là bắt buộc'
-										},
-										pattern: {
-											value: /^\S+@\S+\.\S+$/,
-											message: 'Email không đúng định dạng'
-										}
-									})}
+									{...register('email', rules.email)}
 								/>
 								{/* Set min-height để text ko bị nhảy lên nhảy xuống khi hiện lỗi */}
 								<div className='mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.email?.message}</div>
 							</div>
-							<div className='mt-5'>
+							<div className='mt-2'>
 								<input
 									type='password'
+									autoComplete='on'
 									className=' w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
 									placeholder='Mật khẩu'
-									{...register('password')}
+									{...register('password', rules.password)}
 								/>
-								<div className='min-h-1rem mt-1 text-sm text-red-600'></div>
+								<div className='mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.password?.message}</div>
 							</div>
 
-							<div className='mt-5'>
+							<div className='mt-2'>
 								<input
 									type='password'
+									autoComplete='on'
 									className=' w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
 									placeholder='Nhập lại mật khẩu'
-									{...register('confirm_password')}
+									{...register('confirm_password', rules.confirm_password)}
 								/>
-								<div className='min-h-1rem mt-1 text-sm text-red-600'></div>
+								<div className='mt-1 min-h-[1.25rem] text-sm text-red-600'>{errors.confirm_password?.message}</div>
 							</div>
-							<div className='mt-5'>
+							<div className='mt-2'>
 								<button
 									type='submit'
 									className='w-full border bg-orange py-3 px-2 text-center text-sm uppercase text-white hover:bg-orange-300'
