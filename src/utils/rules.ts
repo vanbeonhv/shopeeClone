@@ -1,8 +1,8 @@
-import { type RegisterOptions } from 'react-hook-form';
+import { UseFormGetValues, type RegisterOptions } from 'react-hook-form';
 
 /* eslint-disable prettier/prettier */
-type Rules = { [key: string]: RegisterOptions }
-export const rules = {
+type Rules = { [key in 'email' | 'password' | 'confirm_password']?: RegisterOptions }
+export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
   email: {
     required: {
       value: true,
@@ -47,6 +47,9 @@ export const rules = {
     minLength: {
       value: 6,
       message: 'Độ dài từ 6-160 ký tự'
-    }
+    },
+    validate: typeof getValues === 'function' ?
+      (value) => value === getValues('password') || 'Nhập lại password không khớp'
+      : undefined
   }
-};
+});
