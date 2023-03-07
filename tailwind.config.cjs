@@ -16,10 +16,13 @@ module.exports = {
 		}
 	},
 	plugins: [
-		plugin(function ({ addComponents }) {
+		plugin(function ({ addComponents, theme }) {
 			addComponents({
 				'.container': {
-				
+				maxWidth: theme('columns.7xl'),
+				marginLeft: 'auto',
+				marginRight: 'auto',
+				paddingLeft: theme('spacing.4')
 				}
 			});
 		})
