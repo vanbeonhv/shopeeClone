@@ -1,6 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import Input from 'src/components/Input';
 import { getRules } from 'src/utils/rules';
 import Input from 'src/components/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -27,7 +28,7 @@ const Register = () => {
 	console.log('errors: ', errors);
 	return (
 		<div className='bg-orange'>
-			<div className='container mx-auto max-w-7xl px-4'>
+			<div className='container'>
 				<div className='grid grid-cols-1 py-12 lg:grid-cols-5 lg:py-28 lg:pr-10'>
 					<div className='lg:col-span-2 lg:col-start-4'>
 						<form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit} noValidate>
@@ -57,6 +58,33 @@ const Register = () => {
 								errorsMessage={errors.confirm_password?.message}
 								autoComplete='on'
 							></Input>
+							<Input
+								type='email'
+								errorMessage={errors.email?.message}
+								placeholder='Email/Số điện thoại/Tên đăng nhập'
+								className='mt-8'
+								name='email'
+								register={register}
+								rules={rules.email}
+							/>
+							<Input
+								type='password'
+								errorMessage={errors.password?.message}
+								placeholder='Mật khẩu'
+								className='mt-2'
+								name='password'
+								register={register}
+								rules={rules.password}
+							/>
+							<Input
+								type='password'
+								errorMessage={errors.confirm_password?.message}
+								placeholder='Nhập lại mật khẩu'
+								className='mt-2'
+								name='confirm_password'
+								register={register}
+								rules={rules.confirm_password}
+							/>
 							<div className='mt-2'>
 								<button
 									type='submit'
