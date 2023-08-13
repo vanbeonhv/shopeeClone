@@ -1,12 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { getRules } from 'src/utils/rules';
+import { getRules, schema } from 'src/utils/rules';
 import Input from 'src/components/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import type { Schema } from 'src/utils/rules';
-import { schema } from 'src/utils/rules';
 interface FormData {
 	email: string;
 	password: string;
