@@ -6,6 +6,10 @@ import Input from 'src/components/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import type { Schema } from 'src/utils/rules';
+import { useMutation } from '@tanstack/react-query';
+import { User } from '../../types/user.type';
+import { registerAccount, RegisterUser } from '../../api/auth.api';
+import { omit } from 'lodash';
 interface FormData {
 	email: string;
 	password: string;
@@ -19,8 +23,16 @@ const Register = () => {
 	} = useForm<Schema>({
 		resolver: yupResolver(schema)
 	});
+
+	const registerAccountMutation = useMutation({
+		mutationFn: (body: RegisterUser) => registerAccount(body)
+	});
+
 	// const rules = getRules(getValues);
 	const onSubmit = handleSubmit((data) => {
+		const tempBody = omit(data, ['confirm_password']);
+		const body = { ...tempBody, name: 'Marc', phonenumber: '986090072', role: 'Customer' };
+		registerAccountMutation.mutate(body, { onSuccess: (data) => console.log(data) });
 		console.log(data);
 	});
 	console.log('errors: ', errors);
