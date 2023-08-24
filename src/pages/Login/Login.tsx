@@ -1,13 +1,26 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { Schema } from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { schema } from '../../utils/rules';
+import { useMutation } from '@tanstack/react-query';
+import { login, LoginUser } from '../../api/auth.api';
+import Input from '../../components/Input';
 
 const Login = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors }
-	} = useForm();
+	} = useForm<Schema>({ resolver: yupResolver(schema) });
+
+	console.log(errors);
+
+	const loginMutation = useMutation({
+		mutationFn: (body: LoginUser) => login(body)
+	});
+
 	const onSubmit = handleSubmit((data) => {
 		console.log(data);
 	});
@@ -18,25 +31,22 @@ const Login = () => {
 					<div className='lg:col-span-2 lg:col-start-4'>
 						<form className='rounded bg-white p-10 shadow-sm' onSubmit={onSubmit}>
 							<div className='text-2xl'>Đăng nhập</div>
-							<div className='mt-5'>
-								<input
-									type='email'
-									name='email'
-									className=' w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-									placeholder='Email/Số điện thoại/Tên đăng nhập'
-								/>
-								{/* Set min-height để text ko bị nhảy lên nhảy xuống khi hiện lỗi */}
-								<div className='mt-1 min-h-[1.25rem] text-sm text-red-600'>Email không hợp lệ</div>
-							</div>
-							<div className='mt-5'>
-								<input
-									type='password'
-									name='password'
-									autoComplete='on'
-									className=' w-full rounded-sm border border-gray-300 p-3 outline-none focus:border-gray-500 focus:shadow-sm'
-									placeholder='Mật khẩu'
-								/>
-							</div>
+							<Input
+								name='email'
+								register={register}
+								type='email'
+								placeholder='Email/Số điện thoại/Tên đăng nhập'
+								className='mt-5'
+								errorsMessage={errors.email?.message}
+							></Input>
+							<Input
+								name='password'
+								register={register}
+								type='password'
+								placeholder='Mật khẩu'
+								className='mt-2'
+								errorsMessage={errors.password?.message}
+							></Input>
 							<div className='mt-5'>
 								<button
 									type='submit'
