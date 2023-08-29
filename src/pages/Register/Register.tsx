@@ -15,9 +15,9 @@ const Register = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors },
 	} = useForm<Schema>({
-		resolver: yupResolver(schema)
+		resolver: yupResolver(schema),
 	});
 	// const rules = getRules(getValues);
 	const onSubmit = handleSubmit((data) => {

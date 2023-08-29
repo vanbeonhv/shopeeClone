@@ -8,7 +8,7 @@ const useRouteElements = () => {
 	const routeElements = useRoutes([
 		{
 			path: '/',
-			element: <ProductList />
+			element: <ProductList />,
 		},
 		{
 			path: '/login',
@@ -16,7 +16,7 @@ const useRouteElements = () => {
 				<RegisterLayout>
 					<Login />
 				</RegisterLayout>
-			)
+			),
 		},
 		{
 			path: '/register',
@@ -24,8 +24,8 @@ const useRouteElements = () => {
 				<RegisterLayout>
 					<Register />
 				</RegisterLayout>
-			)
-		}
+			),
+		},
 	]);
 	return routeElements;
 };

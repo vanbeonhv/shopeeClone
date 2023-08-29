@@ -7,53 +7,53 @@ export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
 	email: {
 		required: {
 			value: true,
-			message: 'Email là bắt buộc'
+			message: 'Email là bắt buộc',
 		},
 		pattern: {
 			value: /^\S+@\S+\.\S+$/,
-			message: 'Email không đúng định dạng'
+			message: 'Email không đúng định dạng',
 		},
 		maxLength: {
 			value: 160,
-			message: 'Độ dài từ 6-160 ký tự'
+			message: 'Độ dài từ 6-160 ký tự',
 		},
 		minLength: {
 			value: 6,
-			message: 'Độ dài từ 6-160 ký tự'
-		}
+			message: 'Độ dài từ 6-160 ký tự',
+		},
 	},
 	password: {
 		required: {
 			value: true,
-			message: 'Password là bắt buộc'
+			message: 'Password là bắt buộc',
 		},
 		maxLength: {
 			value: 160,
-			message: 'Độ dài từ 6-160 ký tự'
+			message: 'Độ dài từ 6-160 ký tự',
 		},
 		minLength: {
 			value: 6,
-			message: 'Độ dài từ 6-160 ký tự'
-		}
+			message: 'Độ dài từ 6-160 ký tự',
+		},
 	},
 	confirm_password: {
 		required: {
 			value: true,
-			message: 'Nhập lại password là bắt buộc'
+			message: 'Nhập lại password là bắt buộc',
 		},
 		maxLength: {
 			value: 160,
-			message: 'Độ dài từ 6-160 ký tự'
+			message: 'Độ dài từ 6-160 ký tự',
 		},
 		minLength: {
 			value: 6,
-			message: 'Độ dài từ 6-160 ký tự'
+			message: 'Độ dài từ 6-160 ký tự',
 		},
 		validate:
 			typeof getValues === 'function'
 				? (value) => value === getValues('password') || 'Nhập lại password không khớp'
-				: undefined
-	}
+				: undefined,
+	},
 });
 
 export const schema = yup.object({
@@ -73,7 +73,7 @@ export const schema = yup.object({
 		.required('Nhập lại password là bắt buộc')
 		.min(6, 'Độ dài từ 6-160 ký tự')
 		.max(160, 'Độ dài từ 6-160 ký tự')
-		.oneOf([yup.ref('password')], 'Nhập lại password không khớp')
+		.oneOf([yup.ref('password')], 'Nhập lại password không khớp'),
 });
 
 export const loginSchema = schema.omit(['confirm_password']);

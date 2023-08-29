@@ -6,7 +6,7 @@ const Login = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors }
+		formState: { errors },
 	} = useForm();
 	const onSubmit = handleSubmit((data) => {
 		console.log(data);
