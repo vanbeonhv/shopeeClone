@@ -1,11 +1,15 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
-import { getRules, schema } from 'src/utils/rules';
+import type { Schema } from 'src/utils/rules';
+import { schema } from 'src/utils/rules';
 import Input from 'src/components/Input';
 import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import type { Schema } from 'src/utils/rules';
+import { useMutation } from '@tanstack/react-query';
+import { registerAccount, RegisterUser } from '../../api/auth.api';
+import { omit } from 'lodash';
+import { isAxiosError, isAxiosUnprocessableEntity } from '../../utils/utils';
+
 interface FormData {
 	email: string;
 	password: string;
@@ -16,14 +20,28 @@ const Register = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
+		setError,
 	} = useForm<Schema>({
 		resolver: yupResolver(schema),
 	});
+
+	const registerAccountMutation = useMutation({
+		mutationFn: (body: RegisterUser) => registerAccount(body),
+	});
+
 	// const rules = getRules(getValues);
 	const onSubmit = handleSubmit((data) => {
-		console.log(data);
+		const tempBody = omit(data, ['confirm_password']);
+		const body = { ...tempBody, name: 'Marc', phonenumber: '986090072', role: 'Customer' };
+		registerAccountMutation.mutate(body, {
+			onSuccess: (data) => console.log(data),
+			onError: (error) => {
+				if (isAxiosUnprocessableEntity(error)) {
+					// const formError = error.setError();
+				}
+			},
+		});
 	});
-	console.log('errors: ', errors);
 	return (
 		<div className='bg-orange'>
 			<div className='container'>
